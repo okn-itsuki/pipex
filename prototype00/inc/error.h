@@ -1,37 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printf_put_char.c                                  :+:      :+:    :+:   */
+/*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iokuno <iokuno@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/14 00:42:01 by iokuno            #+#    #+#             */
-/*   Updated: 2025/05/15 07:07:30 by iokuno           ###   ########.fr       */
+/*   Created: 2025/07/19 09:02:04 by iokuno            #+#    #+#             */
+/*   Updated: 2025/07/29 20:23:26 by iokuno           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#ifndef ERROR_H
+# define ERROR_H
 
-size_t	my_strlen(const char *str)
-{
-	size_t	len;
+# define ARG "Not enough arguments"
 
-	if (!str)
-		return (my_put_str("(null)"));
-	len = 0;
-	while (str[len])
-		len++;
-	return (len);
-}
-
-ssize_t	my_put_char(const char c)
-{
-	return (write(1, &c, 1));
-}
-
-ssize_t	my_put_str(const char *s)
-{
-	if (!s)
-		return (write(1, "(null)", 6));
-	return (write(1, s, my_strlen(s)));
-}
+#endif
