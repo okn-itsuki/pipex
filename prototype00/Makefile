@@ -19,7 +19,9 @@ RM = rm -f
 
 SRCDIR = src
 OBJDIR = obj
-SRCFILE = main.c
+SRCFILE = main.c \
+		arg_invalid.c \
+		find_path.c
 
 SRCS = $(addprefix $(SRCDIR)/, $(SRCFILE))
 OBJS = $(addprefix $(OBJDIR)/, $(SRCFILE:.c=.o))

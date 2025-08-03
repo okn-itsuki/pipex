@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   find_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iokuno <iokuno@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/09 16:49:52 by oitsuki           #+#    #+#             */
-/*   Updated: 2025/08/04 07:10:03 by iokuno           ###   ########.fr       */
+/*   Created: 2025/08/04 06:51:40 by iokuno            #+#    #+#             */
+/*   Updated: 2025/08/04 07:10:05 by iokuno           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	main(int ac, const char **av, const char **envp)
+char	**find_path(const char **envp)
 {
-	char	**path_line;
-	int		i;
-
-	i = 0;
-	path_line = find_path(envp);
-	(void)av;
-	printf("%d : %s\n", i, path_line[0]);
-	if (invalid_usage(ac))
-		printf("OK!");
-	return (EXIT_SUCCESS);
+	while (**envp)
+	{
+		if (ft_strncmp("PATH=", *envp, 5) == 0)
+		{
+			return (ft_split(*envp, ':'));
+		}
+		envp++;
+	}
+	return (NULL);
 }
