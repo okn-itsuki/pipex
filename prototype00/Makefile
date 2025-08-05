@@ -20,8 +20,11 @@ RM = rm -f
 SRCDIR = src
 OBJDIR = obj
 SRCFILE = main.c \
-		arg_invalid.c \
-		find_path.c
+		error.c \
+		find_path.c \
+		init_ctx.c \
+		child_process.c \
+
 
 SRCS = $(addprefix $(SRCDIR)/, $(SRCFILE))
 OBJS = $(addprefix $(OBJDIR)/, $(SRCFILE:.c=.o))
@@ -35,13 +38,13 @@ $(OBJDIR):
 	mkdir -p $(OBJDIR)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(LIBFT_LIB):
 	@$(MAKE) -C $(LIBFT_DIR)
 
 $(NAME): $(LIBFT_LIB) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_LIB) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT_LIB) -o $(NAME)
 
 clean:
 	@rm -rf $(OBJDIR)

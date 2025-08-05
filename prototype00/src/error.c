@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   arg_invalid.c                                      :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iokuno <iokuno@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 06:31:33 by iokuno            #+#    #+#             */
-/*   Updated: 2025/08/04 07:10:01 by iokuno           ###   ########.fr       */
+/*   Updated: 2025/08/05 18:59:36 by iokuno           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	invalid_usage(int ac)
+void	error_exit(char *msg)
 {
-	if (ac < 5)
-	{
-		ft_putstr_fd("error : not enough arguments\n\n", STDIN_FILENO);
-		ft_putstr_fd("Correct type \n$/ ./pipex file1 cmd1 cmd2 file2\n",
-			STDERR_FILENO);
-		exit(EXIT_FAILURE);
-	}
-	return (1);
+	perror(msg);
+	exit(EXIT_FAILURE);
+}
+
+int	invalid_usage(void)
+{
+	ft_putstr_fd(INVALID_ARG, STDIN_FILENO);
+	ft_putstr_fd(CORRECT_TYPE, STDERR_FILENO);
+	exit(EXIT_FAILURE);
 }

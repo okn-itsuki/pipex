@@ -1,26 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.h                                            :+:      :+:    :+:   */
+/*   child_process.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iokuno <iokuno@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/19 09:02:04 by iokuno            #+#    #+#             */
-/*   Updated: 2025/08/05 17:43:20 by iokuno           ###   ########.fr       */
+/*   Created: 2025/08/05 17:57:15 by iokuno            #+#    #+#             */
+/*   Updated: 2025/08/05 19:00:35 by iokuno           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERROR_H
-# define ERROR_H
+#include "pipex.h"
 
-// error.c
-# define INVALID_ARG "Not enough arguments\n"
-# define CORRECT_TYPE "Usage : \n./pipex file1 cmd1 cmd2  ... file2\n"
-
-# define OPEN_ERROR "infile open failed"
-# define PIPE_ERROR "pipe failed"
-# define FORK_ERROR "fork failed"
-# define DUP2_STDIN_ERROR "dup2 failed: prev_fd -> stdin"
-# define DUP2_STDOUT_ERROR "dup2 failed: pipe write -> stdout"
-
-#endif
+void	child_process(char *cmd, char **envp)
+{
+	(void)cmd;
+	(void)envp;
+}
