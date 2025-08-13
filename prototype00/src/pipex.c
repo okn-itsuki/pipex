@@ -6,7 +6,7 @@
 /*   By: iokuno <iokuno@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 08:57:44 by iokuno            #+#    #+#             */
-/*   Updated: 2025/08/05 19:16:13 by iokuno           ###   ########.fr       */
+/*   Updated: 2025/08/13 22:09:33 by iokuno           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,22 @@ static void	last_cmd(t_ctx *ctx, int prev_fd, int arg_i)
 	}
 }
 
+static void	fork_pipex(t_ctx *ctx, int prev_fd, int arg_i)
+{
+	ctx->pid = fork();
+	if (ctx->pid == -1)
+		error_exit(FORK_ERROR);
+	if (ctx->pid == 0)
+	{
+		if (dup2(prev_fd, STDIN_FILENO) == -1)
+			error_exit(DUP2_STDIN_ERROR);
+		if (dup2(ctx->pipe_fd[1], STDOUT_FILENO) == -1)
+			error_exit(DUP2_STDOUT_ERROR);
+		close(ctx->pipe_fd[0]);
+		child_process(ctx->av[arg_i], ctx->envp);
+	}
+}
+
 void	run_pipex(t_ctx *ctx)
 {
 	int	arg_i;
@@ -42,18 +58,7 @@ void	run_pipex(t_ctx *ctx)
 	{
 		if (pipe(ctx->pipe_fd) == -1)
 			error_exit(PIPE_ERROR);
-		ctx->pid = fork();
-		if (ctx->pid == -1)
-			error_exit(FORK_ERROR);
-		if (ctx->pid == 0)
-		{
-			if (dup2(prev_fd, STDIN_FILENO) == -1)
-				error_exit(DUP2_STDIN_ERROR);
-			if (dup2(ctx->pipe_fd[1], STDOUT_FILENO) == -1)
-				error_exit(DUP2_STDOUT_ERROR);
-			close(ctx->pipe_fd[0]);
-			child_process(ctx->av[arg_i], ctx->envp);
-		}
+		fork_pipex(ctx, prev_fd, arg_i);
 		close(ctx->pipe_fd[1]);
 		if (prev_fd != ctx->infile)
 			close(prev_fd);
@@ -62,8 +67,7 @@ void	run_pipex(t_ctx *ctx)
 		arg_i++;
 	}
 	last_cmd(ctx, prev_fd, arg_i);
-	// // 親プロセスは後処理
-	// close(prev_fd);
-	// close(output_fd);
-	// waitpid(pid, NULL, 0); // 最後の子プロセスを待つ
+	close(prev_fd);
+	close(ctx->outfile);
+	waitpid(ctx->pid, NULL, 0);
 }

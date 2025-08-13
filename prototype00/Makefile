@@ -15,7 +15,7 @@ NAME = pipex
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -I inc -I libft -I libft/ft_printf
 
-RM = rm -f
+RM = rm -fr
 
 SRCDIR = src
 OBJDIR = obj
@@ -38,21 +38,21 @@ $(OBJDIR):
 	mkdir -p $(OBJDIR)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
-	@$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 $(LIBFT_LIB):
-	@$(MAKE) -C $(LIBFT_DIR)
+	$(MAKE) -C $(LIBFT_DIR)
 
 $(NAME): $(LIBFT_LIB) $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT_LIB) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_LIB) -o $(NAME)
 
 clean:
-	@rm -rf $(OBJDIR)
-	@$(MAKE) -C $(LIBFT_DIR) clean
+	$(RM) $(OBJDIR)
+	$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
-	@rm -f $(NAME)
-	@$(MAKE) -C $(LIBFT_DIR) fclean
+	$(RM) $(NAME)
+	$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
 

@@ -6,7 +6,7 @@
 /*   By: iokuno <iokuno@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 16:49:52 by oitsuki           #+#    #+#             */
-/*   Updated: 2025/08/05 19:16:10 by iokuno           ###   ########.fr       */
+/*   Updated: 2025/08/13 22:07:11 by iokuno           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,3 @@ int	main(int ac, const char **av, const char **envp)
 		printf("%s ", av[i]);
 	return (EXIT_SUCCESS);
 }
-
-// find_path test main
-
-// int	main(int ac, char **av, const char **envp)
-// {
-// 	char	**path;
-
-// 	(void)ac;
-// 	(void)av;
-// 	path = find_path(envp);
-// 	ft_print_split(path);
-// 	return (EXIT_SUCCESS);
-// }
