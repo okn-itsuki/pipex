@@ -5,6 +5,11 @@
         "unistd.h": "c",
         "error.h": "c",
         "err.h": "c",
-        "libft.h": "c"
+        "libft.h": "c",
+        "split_shell.h": "c",
+        "stdint.h": "c",
+        "errno.h": "c",
+        "fcntl.h": "c",
+        "ft_printf.h": "c"
     }
 }
