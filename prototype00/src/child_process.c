@@ -6,7 +6,7 @@
 /*   By: iokuno <iokuno@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 17:57:15 by iokuno            #+#    #+#             */
-/*   Updated: 2025/09/09 11:32:10 by iokuno           ###   ########.fr       */
+/*   Updated: 2025/09/09 13:55:42 by iokuno           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ static int	code_from_errno(void)
 static void	cleanup_and_exit(t_ctx *ctx, char **args, char *path, int code)
 {
 	if (path)
-		free(path);
+		all_free(path);
 	if (args)
-		free(args);
+		all_free(args);
 	destroy_ctx(ctx);
 	exit(code);
 }

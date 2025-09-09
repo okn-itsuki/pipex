@@ -1,0 +1,72 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: iokuno <iokuno@student.42tokyo.jp>         +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/08/28 22:30:37 by iokuno            #+#    #+#              #
+#    Updated: 2025/08/29 04:33:09 by iokuno           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+# ==== config ====
+NAME     := libft.a          # まとめて作る最終ライブラリ名
+AR       := ar
+ARFLAGS  := rcs
+RANLIB   := ranlib
+MAKEFLAGS += --no-print-directory
+
+# サブライブラリ（各ディレクトリの Makefile が出力する想定の .a 名）
+MYLIB_DIR     := mylib
+MYLIB_LIB     := $(MYLIB_DIR)/mylib.a
+
+FT_PRINTF_DIR := ft_printf
+FT_PRINTF_LIB := $(FT_PRINTF_DIR)/ft_printf.a
+
+SPLIT_DIR     := split_shell
+SPLIT_LIB     := $(SPLIT_DIR)/split_shell.a
+
+SUBDIRS := $(MYLIB_DIR) $(FT_PRINTF_DIR) $(SPLIT_DIR)
+SUBLIBS := $(MYLIB_LIB) $(FT_PRINTF_LIB) $(SPLIT_LIB)
+
+.PHONY: all libs clean fclean re
+
+all: $(NAME)
+
+libs: $(SUBLIBS)
+
+$(MYLIB_LIB):
+	$(MAKE) -C $(MYLIB_DIR)
+
+$(FT_PRINTF_LIB):
+	$(MAKE) -C $(FT_PRINTF_DIR)
+
+$(SPLIT_LIB):
+	$(MAKE) -C $(SPLIT_DIR)
+
+$(NAME): libs
+	@rm -f $@
+	@{ \
+		echo "create $@"; \
+		echo "addlib $(MYLIB_LIB)"; \
+		echo "addlib $(FT_PRINTF_LIB)"; \
+		echo "addlib $(SPLIT_LIB)"; \
+		echo "save"; \
+		echo "end"; \
+	} > .ar.mri
+	@$(AR) -M < .ar.mri
+	@rm -f .ar.mri
+	@$(RANLIB) $@
+	@echo "==> built $@ from: $(notdir $(SUBLIBS))"
+
+clean:
+	@for d in $(SUBDIRS); do $(MAKE) -C $$d clean; done
+
+fclean:
+	@for d in $(SUBDIRS); do $(MAKE) -C $$d fclean; done
+	@rm -f $(NAME)
+
+re:
+	$(MAKE) fclean
+	$(MAKE) all
